@@ -1,0 +1,6 @@
+#!/bin/bash
+cd /srv/www/pinry
+bin/python manage.py collectstatic --noinput --settings=pinry.settings.production
+bin/python manage.py syncdb --migrate --noinput --settings=pinry.settings.production
+chown -R www-data:www-data /data
+
