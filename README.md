@@ -17,34 +17,32 @@ avoid all these issues.
 ## Building docker-pinry
 
 Running this will build you a docker image with the latest version of both
-docker-pinry and pinry itself. I recommend following the "Increasing
-docker-pinry security" section below before actually building but it's not a
-requirement.
+docker-pinry and pinry itself.
 
     git clone https://github.com/overshard/docker-pinry.git
     cd docker-pinry
     docker build -t overshard/pinry .
 
 
-### Increasing docker-pinry security
-
-Before buiding edit `pinry/settings/production.py` and set a custom `SECRET_KEY` 
-and set `ALLOWED_HOSTS` to the domain name(s) you're going to be using. It also
-wouldn't hurt to enable some SSL via nginx but that goes a bit past this
-README file.
-
 ## Running docker-pinry
 
-Once you get the system built you'll need to run the `init` once to create your
-database and collect static files. The first item in the `-v` option,
-`/mnt/pinry`, is the location on the host machine you wish to store these files.
-You can now run the `start` command at any time to get the whole thing running.
-If you have no other websites running on your server and just want pinry then
-you can also map the port `-p` directly to `80`, `-p=80:80` and it will act as
-a complete server solution.
+Running the start command for the first time will setup your production secret
+key, database and static files. It is important that you decide what port you
+want and what location on the host machine you wish to store your files. If this
+is the only thing running on your system and you wish to make it public without
+a proxy then you can set `-p=80:80`. The setting `-p=10000:80` assumes you are
+wanting to proxy to this isntance using something like nginx. Also note that you
+must have your host mount directory created before this (`mkdir -p /mnt/pinry`).
 
-    docker run -v=/mnt/pinry:/data overshard/pinry /init
-    docker run -d=true -p=10000:80 -v=/mnt/pinry:/data overshard/pinry /start
+    sudo docker run -d=true -p=10000:80 -v=/mnt/pinry:/data overshard/pinry /start
+
+If it's the first run it'll take a few seconds but it will print out your
+container ID which should be used to start and stop the container in the future
+using the commands:
+
+    sudo docker start <container_id>
+    sudo docker stop <container_id>
+
 
 ### Notes on the run commands
 

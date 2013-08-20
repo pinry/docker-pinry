@@ -1,3 +1,43 @@
 #!/bin/bash
+# -----------------------------------------------------------------------------
+# docker-pinry /start script
+#
+# Will setup database and static files if they don't exist already, if they do
+# just continues to run docker-pinry.
+#
+# Authors: Isaac Bythewood
+# Updated: Aug 19th, 2014
+# -----------------------------------------------------------------------------
+
+
+# Check for secret key if one doesn't exist create.
+if [ ! -f /data/production_secret_key.txt ]
+then
+    cd /data
+    PRODUCTION_SECRET_KEY=`pwgen -c -n -1 65`
+    echo $PRODUCTION_SECRET_KEY > /data/production_secret_key.txt
+else
+    PRODUCTION_SECRET_KEY=`cat /data/production_secret_key.txt`
+fi
+# Either way we need to try and set it because it may be a new docker container
+sed -i "s/CHANGE-ME/$PRODUCTION_SECRET_KEY/" /srv/www/pinry/pinry/settings/production.py
+
+# If static files don't exist collect them
+if [ ! -d /data/static ]
+then
+    cd /srv/www/pinry
+    bin/python manage.py collectstatic --noinput --settings=pinry.settings.production
+fi
+
+# If database doesn't exist yet create it
+if [ ! -f /data/production.db ]
+then
+    bin/python manage.py syncdb --migrate --noinput --settings=pinry.settings.production
+fi
+
+# Fix all settings after all commands are run
+chown -R www-data:www-data /data
+
+
 /usr/bin/supervisord
 

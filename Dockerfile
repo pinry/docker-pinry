@@ -27,7 +27,7 @@ run    ln -s /bin/true /sbin/initctl
 # Download and install everything from the repos and create virtualenv.
 add    ./apt/sources.list /etc/apt/sources.list
 run    apt-get --yes update; apt-get --yes upgrade
-run    apt-get --yes install git supervisor nginx python-virtualenv uwsgi uwsgi-plugin-http uwsgi-plugin-python sqlite3
+run    apt-get --yes install git supervisor nginx python-virtualenv uwsgi uwsgi-plugin-http uwsgi-plugin-python sqlite3 pwgen
 run    apt-get --yes build-dep python-imaging
 run    mkdir -p /srv/www/; cd /srv/www/; git clone https://github.com/pinry/pinry.git
 run    mkdir /srv/www/pinry/logs; mkdir /srv/www/pinry/uwsgi; mkdir /data
@@ -43,12 +43,11 @@ add    ./supervisor/conf.d/nginx.conf /etc/supervisor/conf.d/nginx.conf
 add    ./supervisor/conf.d/uwsgi.conf /etc/supervisor/conf.d/uwsgi.conf
 add    ./pinry/settings/__init__.py /srv/www/pinry/pinry/settings/__init__.py
 add    ./pinry/settings/production.py /srv/www/pinry/pinry/settings/production.py
-add    ./scripts/init /init
 add    ./scripts/start /start
 
 
 # Fix all permissions
-run    chown -R www-data:www-data /srv/www; chown -R www-data:www-data /data; chmod +x /init; chmod +x /start
+run    chown -R www-data:www-data /srv/www; chown -R www-data:www-data /data; chmod +x /start
 
 
 # 80 is for nginx web, /data contains static files and database /start runs it.
