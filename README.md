@@ -5,15 +5,6 @@ help on getting started with docker see the [official getting started guide][0].
 For more information on Pinry and a demo check out it's [website][1].
 
 
-## Use the pre-built docker-pinry
-
-This will grab my version of docker-pinry which may or may not be out of date
-and is a huge image file download. I recommend building docker-pinry yourself to
-avoid all these issues.
-
-    docker pull overshard/pinry
-
-
 ## Building docker-pinry
 
 Running this will build you a docker image with the latest version of both
