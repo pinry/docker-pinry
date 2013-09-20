@@ -1,4 +1,4 @@
-## License (Simplified BSD)
+# License (Simplified BSD)
 
 Copyright (c) Pinry Contributors
 All rights reserved.
