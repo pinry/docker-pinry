@@ -10,9 +10,9 @@ For more information on Pinry and a demo check out it's [website][1].
 Running this will build you a docker image with the latest version of both
 docker-pinry and pinry itself.
 
-    git clone https://github.com/overshard/docker-pinry.git
+    git clone https://github.com/pinry/docker-pinry.git
     cd docker-pinry
-    docker build -t overshard/pinry .
+    docker build -t pinry/pinry .
 
 
 ## Running docker-pinry
@@ -25,7 +25,7 @@ a proxy then you can set `-p=80:80`. The setting `-p=10000:80` assumes you are
 wanting to proxy to this isntance using something like nginx. Also note that you
 must have your host mount directory created before this (`mkdir -p /mnt/pinry`).
 
-    sudo docker run -d=true -p=10000:80 -v=/mnt/pinry:/data overshard/pinry /start
+    sudo docker run -d=true -p=10000:80 -v=/mnt/pinry:/data pinry/pinry /start
 
 If it's the first run it'll take a few seconds but it will print out your
 container ID which should be used to start and stop the container in the future
@@ -38,7 +38,7 @@ using the commands:
 ### Notes on the run commands
 
  + `-v` is the volume you are mounting `-v=host_dir:docker_dir`
- + `overshard/pinry` is simply what I called my docker build of this image
+ + `pinry/pinry` is simply what I called my docker build of this image
  + `-d=true` allows this to run cleanly as a daemon, remove for debugging
  + `-p` is the port it connects to, `-p=host_port:docker_port`
 
