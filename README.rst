@@ -70,6 +70,6 @@ stronger database solution.
 
 .. Links
 
-.. _offical getting started guide: http://www.docker.io/gettingstarted/
+.. _official getting started guide: http://www.docker.io/gettingstarted/
 .. _website: http://getpinry.com/
 
