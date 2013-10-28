@@ -12,7 +12,7 @@ Building docker-pinry
 Running this will build you a docker image with the latest version of both
 docker-pinry and pinry itself::
 
-  git clone https://github.com/pinry/docker-pinry.git
+  git clone https://github.com/pinry/docker-pinry
   cd docker-pinry
   docker build -t pinry/pinry .
 
