@@ -6,14 +6,29 @@ help on getting started with docker see the `official getting started guide`_.
 For more information on Pinry and a demo check out it's `website`_.
 
 
+Getting docker-pinry
+----------------
+
+Running this will get the latest version of both
+docker-pinry and pinry itself::
+
+  git clone https://github.com/pinry/docker-pinry
+  cd docker-pinry
+  
+Configuring docker-pinry
+------------------------
+Enable signups for new users by editting ``pinry/settings/__init__.py``::
+
+  ALLOW_NEW_REGISTRATIONS = True
+  
+`Additional pinry configuration settings`_
+  
 Building docker-pinry
 ---------------------
 
 Running this will build you a docker image with the latest version of both
 docker-pinry and pinry itself::
 
-  git clone https://github.com/pinry/docker-pinry
-  cd docker-pinry
   docker build -t pinry/pinry .
 
 
@@ -46,6 +61,10 @@ Notes on the run commands
 * ``-d=true`` allows this to run cleanly as a daemon, remove for debugging
 * ``-p`` is the port it connects to, ``-p=host_port:docker_port``
 
+Using docker-pinry
+------------------
+Open a browser to ``http://<YOUR-HOSTNAME>:10000`` and register. Replace YOUR-HOSTNAME with the name
+of the machine docker is running on, likely localhost.
 
 Why include nginx and not just map to uwsgi directly?
 -----------------------------------------------------
@@ -72,4 +91,5 @@ stronger database solution.
 
 .. _official getting started guide: http://www.docker.io/gettingstarted/
 .. _website: http://getpinry.com/
+.. _additional pinry configuration settings: https://github.com/pinry/pinry/blob/master/docs/basic_customization.rst
 
