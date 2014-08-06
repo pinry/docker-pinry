@@ -12,7 +12,7 @@
 
 
 # Base system is the LTS version of Ubuntu.
-from   ubuntu:13.10
+from   ubuntu:14.04
 
 
 # Make sure we don't get notifications we can't answer during building.
@@ -20,7 +20,6 @@ env    DEBIAN_FRONTEND noninteractive
 
 
 # Download and install everything from the repos and create virtualenv.
-add    ./apt/sources.list /etc/apt/sources.list
 run    apt-get --yes update; apt-get --yes upgrade
 run    apt-get --yes install git supervisor nginx python-virtualenv uwsgi uwsgi-core uwsgi-plugin-python sqlite3 pwgen
 run    apt-get --yes build-dep python-imaging
