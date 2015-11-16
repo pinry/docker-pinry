@@ -17,7 +17,7 @@ docker-pinry and pinry itself::
   
 Configuring docker-pinry
 ------------------------
-Enable signups for new users by editting ``pinry/settings/__init__.py``::
+Enable signups for new users by editing ``pinry/settings/__init__.py``::
 
   ALLOW_NEW_REGISTRATIONS = True
   
@@ -40,7 +40,7 @@ key, database and static files. It is important that you decide what port you
 want and what location on the host machine you wish to store your files. If this
 is the only thing running on your system and you wish to make it public without
 a proxy then you can set ``-p=80:80``. The setting ``-p=10000:80`` assumes you
-are wanting to proxy to this isntance using something like nginx. Also note that
+are wanting to proxy to this instance using something like nginx. Also note that
 you must have your host mount directory created first (``mkdir -p /mnt/pinry``)::
 
   sudo docker run -d=true -p=10000:80 -v=/mnt/pinry:/data pinry/pinry /start
