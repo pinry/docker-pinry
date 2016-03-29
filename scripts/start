@@ -32,7 +32,8 @@ fi
 # If database doesn't exist yet create it
 if [ ! -f /data/production.db ]
 then
-    bin/python manage.py syncdb --migrate --noinput --settings=pinry.settings.production
+    cd /srv/www/pinry
+    bin/python manage.py migrate --noinput --settings=pinry.settings.production
 fi
 
 # Fix all settings after all commands are run

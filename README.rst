@@ -29,7 +29,7 @@ Building docker-pinry
 Running this will build you a docker image with the latest version of both
 docker-pinry and pinry itself::
 
-  docker build -t pinry/pinry .
+  sudo docker build -t pinry/pinry .
 
 
 Running docker-pinry

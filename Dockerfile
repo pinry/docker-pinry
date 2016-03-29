@@ -6,7 +6,7 @@
 # most friendly and has everything contained in a single instance.
 #
 # Authors: Isaac Bythewood
-# Updated: Aug 16th, 2014
+# Updated: Mar 29th, 2016
 # Require: Docker (http://www.docker.io/)
 # -----------------------------------------------------------------------------
 
@@ -15,16 +15,14 @@
 from   ubuntu:14.04
 
 
-# Make sure we don't get notifications we can't answer during building.
-env    DEBIAN_FRONTEND noninteractive
-
-
 # Download and install everything from the repos and create virtualenv.
 run    apt-get --yes update; apt-get --yes upgrade
-run    apt-get --yes install git supervisor nginx python-virtualenv uwsgi uwsgi-core uwsgi-plugin-python sqlite3 pwgen
+run    apt-get --yes install git supervisor nginx python-virtualenv uwsgi uwsgi-core uwsgi-plugin-python sqlite3 pwgen nodejs-legacy npm
 run    apt-get --yes build-dep python-imaging
+run    npm install -g bower
 run    mkdir -p /srv/www/; cd /srv/www/; git clone https://github.com/pinry/pinry.git
 run    mkdir /srv/www/pinry/logs; mkdir /srv/www/pinry/uwsgi; mkdir /data
+run    cd /srv/www/pinry; bower --allow-root install
 run    cd /srv/www/pinry; virtualenv .; bin/pip install -r requirements.txt; chown -R www-data:www-data .
 
 
@@ -48,3 +46,4 @@ run    chown -R www-data:www-data /srv/www; chown -R www-data:www-data /data; ch
 expose 80
 volume ["/data"]
 cmd    ["/start"]
+
