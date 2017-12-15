@@ -18,11 +18,11 @@ from   ubuntu:14.04
 # Download and install everything from the repos and create virtualenv.
 run    apt-get --yes update; apt-get --yes upgrade
 run    apt-get --yes install git supervisor nginx python-virtualenv uwsgi uwsgi-core uwsgi-plugin-python sqlite3 pwgen nodejs-legacy npm
-run    apt-get --yes build-dep python-imaging
+run    apt-get --yes install python-imaging
+run    apt-get --yes install python-dev libjpeg8-dev
 run    npm install -g bower
 run    mkdir -p /srv/www/; cd /srv/www/; git clone https://github.com/pinry/pinry.git
 run    mkdir /srv/www/pinry/logs; mkdir /srv/www/pinry/uwsgi; mkdir /data
-run    cd /srv/www/pinry; bower --allow-root install
 run    cd /srv/www/pinry; virtualenv .; bin/pip install -r requirements.txt; chown -R www-data:www-data .
 
 
