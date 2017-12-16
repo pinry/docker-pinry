@@ -20,20 +20,20 @@ else
     PRODUCTION_SECRET_KEY=`cat /data/production_secret_key.txt`
 fi
 # Either way we need to try and set it because it may be a new docker container
-sed -i "s/CHANGE-ME/$PRODUCTION_SECRET_KEY/" /srv/www/pinry/pinry/settings/production.py
+sed -i "s/CHANGE-ME/$PRODUCTION_SECRET_KEY/" /srv/www/pinry/pinry/settings.py
 
 # If static files don't exist collect them
 if [ ! -d /data/static ]
 then
     cd /srv/www/pinry
-    bin/python manage.py collectstatic --noinput --settings=pinry.settings.production
+    bin/python manage.py collectstatic --noinput --settings=pinry.settings
 fi
 
 # If database doesn't exist yet create it
 if [ ! -f /data/production.db ]
 then
     cd /srv/www/pinry
-    bin/python manage.py migrate --noinput --settings=pinry.settings.production
+    bin/python manage.py migrate --noinput --settings=pinry.settings
 fi
 
 # Fix all settings after all commands are run
