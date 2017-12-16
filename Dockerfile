@@ -25,6 +25,10 @@ run    mkdir -p /srv/www/; cd /srv/www/; git clone https://github.com/pinry/pinr
 run    mkdir /srv/www/pinry/logs; mkdir /srv/www/pinry/uwsgi; mkdir /data
 run    cd /srv/www/pinry; virtualenv .; bin/pip install -r requirements.txt; chown -R www-data:www-data .
 
+# Fix permissions
+add    ./pinry/settings.py /srv/www/pinry/pinry/settings.py
+run    chown -R www-data:www-data /srv/www
+
 
 # Load in all of our config files.
 add    ./nginx/nginx.conf /etc/nginx/nginx.conf
@@ -33,14 +37,11 @@ add    ./uwsgi/apps-enabled/pinry.ini /etc/uwsgi/apps-enabled/pinry.ini
 add    ./supervisor/supervisord.conf /etc/supervisor/supervisord.conf
 add    ./supervisor/conf.d/nginx.conf /etc/supervisor/conf.d/nginx.conf
 add    ./supervisor/conf.d/uwsgi.conf /etc/supervisor/conf.d/uwsgi.conf
-#add    ./pinry/settings/__init__.py /srv/www/pinry/pinry/settings/__init__.py
-#add    ./pinry/settings/production.py /srv/www/pinry/pinry/settings/production.py
-add    ./pinry/settings.py /srv/www/pinry/pinry/settings.py
+
+
+# Fix permissions
 add    ./scripts/start /start
-
-
-# Fix all permissions
-run    chown -R www-data:www-data /srv/www; chown -R www-data:www-data /data; chmod +x /start
+run    chown -R www-data:www-data /data; chmod +x /start
 
 
 # 80 is for nginx web, /data contains static files and database /start runs it.
