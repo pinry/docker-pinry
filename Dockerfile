@@ -40,6 +40,7 @@ add    ./scripts/start /start
 
 # Fix all permissions
 run    chown -R www-data:www-data /srv/www; chown -R www-data:www-data /data; chmod +x /start
+run    pip install uwsgi django==1.6
 
 
 # 80 is for nginx web, /data contains static files and database /start runs it.
