@@ -6,7 +6,7 @@ from django.contrib.messages import constants as messages
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '%FttF^5KhBR@8!9%XbD1'
+SECRET_KEY = 'CHANGE-ME'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -122,7 +122,7 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
 # Set to False to disable people from creating new accounts.
-ALLOW_NEW_REGISTRATIONS = False
+ALLOW_NEW_REGISTRATIONS = True
 
 # Set to False to force users to login before seeing any pins. 
 PUBLIC = True
