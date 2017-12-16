@@ -9,6 +9,11 @@
 # Updated: Aug 19th, 2014
 # -----------------------------------------------------------------------------
 
+# Fix https
+if [ -n "$IS_HTTPS" ]; then
+    sed -i "s/http:/https:/" /srv/www/pinry/pinry/templates/includes/bookmarklet_link.html
+fi
+
 
 # Check for secret key if one doesn't exist create.
 if [ ! -f /data/production_secret_key.txt ]
