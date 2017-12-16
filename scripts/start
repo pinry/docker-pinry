@@ -19,6 +19,9 @@ if [ -n "$ALLOW_NEW_REGISTRATIONS" ]; then
     sed -i "s/ALLOW_NEW_REGISTRATIONS = False/ALLOW_NEW_REGISTRATIONS = True/" /srv/www/pinry/pinry/settings.py
 fi
 
+if [ -n "$DEBUG" ]; then
+    sed -i "s/DEBUG = False/DEBUG = True/" /srv/www/pinry/pinry/settings.py
+fi
 
 # Check for secret key if one doesn't exist create.
 if [ ! -f /data/production_secret_key.txt ]
