@@ -27,6 +27,10 @@ if [ -n "$STANDARD_SIZE" ]; then
     sed -i "s/'standard': {'size': \[600, 0\]},/'standard': {'size': [${STANDARD_SIZE}]},/" /srv/www/pinry/pinry/settings.py
 fi
 
+if [ -n "$CLIENT_MAX_BODY_SIZE" ]; then
+    sed -i "s/client_max_body_size 1m/client_max_body_size ${CLIENT_MAX_BODY_SIZE}/" /etc/nginx/nginx.conf
+fi
+
 if [ -n "$DEBUG" ]; then
     sed -i "s/DEBUG = False/DEBUG = True/" /srv/www/pinry/pinry/settings.py
 fi
