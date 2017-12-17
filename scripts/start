@@ -47,19 +47,19 @@ sed -i "s/CHANGE-ME/$PRODUCTION_SECRET_KEY/" /srv/www/pinry/pinry/settings.py
 if [ ! -d /data/static ]
 then
     cd /srv/www/pinry
-    bin/python manage.py collectstatic --noinput --settings=pinry.settings
+    python manage.py collectstatic --noinput --settings=pinry.settings
 fi
 
 # If database doesn't exist yet create it
 if [ ! -f /data/production.db ]
 then
     cd /srv/www/pinry
-    bin/python manage.py migrate --noinput --settings=pinry.settings
+    python manage.py migrate --noinput --settings=pinry.settings
 fi
 
 # Fix all settings after all commands are run
 chown -R www-data:www-data /data
 
 
-/usr/bin/supervisord
+supervisord
 
