@@ -24,7 +24,7 @@ if [ -n "$PRIVATE" ]; then
 fi
 
 if [ -n "$STANDARD_SIZE" ]; then
-    sed -i "s/'standard': \{'size': [600, 0]\},/'standard': \{'size': [${STANDARD_SIZE}]\},/" /srv/www/pinry/pinry/settings.py
+    sed -i "s/'standard': \{'size': \[600, 0\]\},/'standard': {'size': [${STANDARD_SIZE}]},/" /srv/www/pinry/pinry/settings.py
 fi
 
 if [ -n "$DEBUG" ]; then
