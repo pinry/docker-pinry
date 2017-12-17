@@ -23,6 +23,10 @@ if [ -n "$PRIVATE" ]; then
     sed -i "s/PUBLIC = True/PUBLIC = False/" /srv/www/pinry/pinry/settings.py
 fi
 
+if [ -n "$STANDARD_SIZE" ]; then
+    sed -i "s/'standard': \{'size': [600, 0]\},/'standard': \{'size': [${STANDARD_SIZE}]\},/" /srv/www/pinry/pinry/settings.py
+fi
+
 if [ -n "$DEBUG" ]; then
     sed -i "s/DEBUG = False/DEBUG = True/" /srv/www/pinry/pinry/settings.py
 fi
