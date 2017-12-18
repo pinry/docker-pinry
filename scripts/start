@@ -53,14 +53,10 @@ fi
 sed -i "s/CHANGE-ME/$PRODUCTION_SECRET_KEY/" /srv/www/pinry/pinry/settings.py
 
 # If static files don't exist collect them
-if [ -n "$NO_STATIC_CACHE" ]
-then
-else
-if [ ! -d /data/static ]
+if [ -z "$NO_STATIC_CACHE" -a ! -d /data/static ]
 then
     cd /srv/www/pinry
     python manage.py collectstatic --noinput --settings=pinry.settings
-fi
 fi
 
 # If database doesn't exist yet create it
