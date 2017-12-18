@@ -35,6 +35,11 @@ if [ -n "$DEBUG" ]; then
     sed -i "s/DEBUG = False/DEBUG = True/" /srv/www/pinry/pinry/settings.py
 fi
 
+if [ -n "$NO_STATIC_CACHE" ]; then
+    sed -i "15s/alias \/data\/static;/alias \/srv\/www\/pinry\/pinry\/static;/" /etc/nginx/nginx.conf
+    sed -i "16s/expires max;/expires off;/" /etc/nginx/nginx.conf
+fi
+
 # Check for secret key if one doesn't exist create.
 if [ ! -f /data/production_secret_key.txt ]
 then
@@ -48,10 +53,14 @@ fi
 sed -i "s/CHANGE-ME/$PRODUCTION_SECRET_KEY/" /srv/www/pinry/pinry/settings.py
 
 # If static files don't exist collect them
+if [ -n "$NO_STATIC_CACHE" ]
+then
+else
 if [ ! -d /data/static ]
 then
     cd /srv/www/pinry
     python manage.py collectstatic --noinput --settings=pinry.settings
+fi
 fi
 
 # If database doesn't exist yet create it
