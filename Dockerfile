@@ -14,7 +14,7 @@
 # Base system is the LTS version of Ubuntu.
 FROM ubuntu:14.04
 
-RUN groupadd -g 2300 tmpgroup && usermod -g tmpgroup www-data && groupdel www-data && groupadd -g 1000 www-data && usermod -g www-data && usermod -u 1000 && groupdel tmpgroup
+RUN groupadd -g 2300 tmpgroup && usermod -g tmpgroup www-data && groupdel www-data && groupadd -g 1000 www-data && usermod -g www-data www-data && usermod -u 1000 && groupdel tmpgroup
 
 ENV PYENV_ROOT /usr/local/pyenv
 ENV PATH /usr/local/pyenv/shims:/usr/local/pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
