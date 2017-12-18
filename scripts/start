@@ -36,8 +36,8 @@ if [ -n "$DEBUG" ]; then
 fi
 
 if [ -n "$NO_STATIC_CACHE" ]; then
-    sed -i "15s/alias \/data\/static;/alias \/srv\/www\/pinry\/pinry\/static;/" /etc/nginx/sites-enabled/default
-    sed -i "16s/expires max;/expires off;/" /etc/nginx/sites-enabled/default
+    sed -i "15s#alias /data/static;#alias /srv/www/pinry/pinry/static;#" /etc/nginx/sites-available/default
+    sed -i "16s/expires max;/expires off;/" /etc/nginx/sites-available/default
 fi
 
 # Check for secret key if one doesn't exist create.
