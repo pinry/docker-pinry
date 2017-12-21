@@ -24,6 +24,7 @@ RUN apt-get update && \
     curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash
 RUN pyenv install 2.7.14 && pyenv global 2.7.14
 RUN apt-get -y install nginx sqlite3 pwgen nodejs-legacy npm python-imaging libjpeg8-dev
+RUN apt-get -y install nginx-extras
 RUN npm install -g bower
 RUN mkdir -p /srv/www/; cd /srv/www/; git clone https://github.com/haoling/pinry.git
 RUN mkdir /srv/www/pinry/logs; mkdir /srv/www/pinry/uwsgi; mkdir /data
