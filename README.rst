@@ -60,6 +60,8 @@ Notes on the run commands
 * ``pinry/pinry`` is simply what I called my docker build of this image
 * ``-d=true`` allows this to run cleanly as a daemon, remove for debugging
 * ``-p`` is the port it connects to, ``-p=host_port:docker_port``
+* ``-e ALLOW_NEW_REGISTRATIONS=true`` enables people from creating new accounts. Defaults ``false``
+* ``-e PRIVATE=true`` forces users to login before seeing any pins. Defaults ``false``
 
 Using docker-pinry
 ------------------
