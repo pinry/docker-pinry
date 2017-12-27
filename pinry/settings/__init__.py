@@ -74,6 +74,7 @@ API_LIMIT_PER_PAGE = 50
 
 
 INSTALLED_APPS = (
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
