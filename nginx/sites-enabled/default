@@ -40,6 +40,22 @@ server {
         access_log off;
     }
 
+    location /i/ {
+        perl '
+            sub {
+                my $r = shift;
+                my $id = $r->uri;
+                $id =~ s/^\/i\/([0-9]+)\..+$/$1/;
+
+                my $image_uri = `curl "http://localhost/api/v1/pin/$id/?format=json" | jq -r .image.image`;
+                $image_uri =~ s/^([^\r\n]+)[\r\n]*$/$1/;
+
+                $r->internal_redirect($image_uri);
+                return OK;
+            }
+        ';
+    }
+
     location / {
         include uwsgi_params;
         uwsgi_pass unix:/srv/www/pinry/uwsgi/socket;
