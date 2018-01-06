@@ -1,22 +1,22 @@
 server {
     listen 80 default;
     server_name _;
-    
+
     access_log /srv/www/pinry/logs/access.log;
     error_log /srv/www/pinry/logs/error.log;
-    
+
     location /media {
         alias /data/media;
         expires max;
         access_log off;
     }
-    
+
     location /static {
         alias /data/static;
         expires max;
         access_log off;
     }
-    
+
     location / {
         include uwsgi_params;
         uwsgi_pass unix:/srv/www/pinry/uwsgi/socket;
