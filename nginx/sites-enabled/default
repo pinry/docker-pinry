@@ -7,8 +7,31 @@ server {
 
     location /media {
         alias /data/media;
+        access_log off;
+        perl '
+            sub {
+                my $r = shift;
+                my $filename =  $r->filename;
+
+                my $mime_type = `file -bi $filename`;
+                $mime_type =~ s/^[ \r\n]*(.*?)(; charset=binary)?[ \r\n]*$/$1/;
+
+                my $_uri = $r->uri;
+                $_uri =~ s/^\/media\//\/_media\//;
+                $_uri .= "?force_mime_type=" . $mime_type;
+                $r->internal_redirect($_uri);
+                return OK;
+            }
+        ';
+    }
+
+    location /_media {
+        alias /data/media;
         expires max;
         access_log off;
+        if ($arg_force_mime_type != false) {
+            add_header "Content-Type" $arg_force_mime_type;
+        }
     }
 
     location /static {
