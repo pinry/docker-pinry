@@ -5,6 +5,12 @@ server {
     access_log /srv/www/pinry/logs/access.log;
     error_log /srv/www/pinry/logs/error.log;
 
+    location /static {
+        alias /data/static;
+        expires max;
+        access_log off;
+    }
+
     location /media {
         alias /data/media;
         access_log off;
@@ -32,12 +38,6 @@ server {
         if ($arg_force_mime_type != false) {
             add_header "Content-Type" $arg_force_mime_type;
         }
-    }
-
-    location /static {
-        alias /data/static;
-        expires max;
-        access_log off;
     }
 
     location /i/ {
