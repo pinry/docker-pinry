@@ -41,6 +41,10 @@ if [ -n "$NO_STATIC_CACHE" ]; then
     sed -i "10s/expires max;/expires off;/" /etc/nginx/sites-available/default
 fi
 
+if [ -n "$PROCESSES" ]; then
+    sed -i "s/processes = 1/processes = ${PROCESSES}/" /etc/uwsgi/apps-enabled/pinry.ini
+fi
+
 # Check for secret key if one doesn't exist create.
 if [ ! -f /data/production_secret_key.txt ]
 then
