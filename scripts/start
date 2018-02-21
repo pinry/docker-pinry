@@ -33,7 +33,7 @@ fi
 
 if [ -n "$DEBUG" ]; then
     sed -i "s/DEBUG = False/DEBUG = True/" /srv/www/pinry/pinry/settings.py
-    echo 'touch-reload %(base)/reload.trigger' >>/etc/uwsgi/apps-enabled/pinry.ini
+    echo 'touch-reload = %(base)/reload.trigger' >>/etc/uwsgi/apps-enabled/pinry.ini
 fi
 
 if [ -n "$NO_STATIC_CACHE" ]; then
