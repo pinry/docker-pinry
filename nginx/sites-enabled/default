@@ -49,6 +49,8 @@ server {
 
                 my $image_uri = `curl "http://localhost/api/v1/pin/$id/?format=json" | jq -r .image.image`;
                 $image_uri =~ s/^([^\r\n]+)[\r\n]*$/$1/;
+                $image_uri =~ s/\+/ /g;
+                $image_uri =~ s/%([0-9a-fA-F]{2})/pack("H2",$1)/eg;
 
                 $r->internal_redirect($image_uri);
                 return OK;
