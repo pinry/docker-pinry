@@ -1,6 +1,9 @@
 docker-pinry
 ============
 
+.. image:: https://travis-ci.org/pinry/docker-pinry.svg?branch=master
+    :target: https://travis-ci.org/pinry/docker-pinry
+
 A nice and easy way to get a pinry instance up and running using docker. For
 help on getting started with docker see the `official getting started guide`_.
 For more information on Pinry and a demo check out it's `website`_.
