@@ -1,63 +1,22 @@
 server {
     listen 80 default;
     server_name _;
-
+    
     access_log /srv/www/pinry/logs/access.log;
     error_log /srv/www/pinry/logs/error.log;
-
+    
+    location /media {
+        alias /data/media;
+        expires max;
+        access_log off;
+    }
+    
     location /static {
         alias /data/static;
         expires max;
         access_log off;
     }
-
-    location /media {
-        alias /data/media;
-        access_log off;
-        perl '
-            sub {
-                my $r = shift;
-                my $filename =  $r->filename;
-
-                my $mime_type = `file -bi $filename`;
-                $mime_type =~ s/^[ \r\n]*(.*?)(; charset=binary)?[ \r\n]*$/$1/;
-
-                my $_uri = $r->uri;
-                $_uri =~ s/^\/media\//\/_media\//;
-                $_uri .= "?force_mime_type=" . $mime_type;
-                $r->internal_redirect($_uri);
-                return OK;
-            }
-        ';
-    }
-
-    location /_media {
-        alias /data/media;
-        expires max;
-        access_log off;
-        if ($arg_force_mime_type != false) {
-            add_header "Content-Type" $arg_force_mime_type;
-        }
-    }
-
-    location /i/ {
-        perl '
-            sub {
-                my $r = shift;
-                my $id = $r->uri;
-                $id =~ s/^\/i\/([0-9]+)\..+$/$1/;
-
-                my $image_uri = `curl "http://localhost/api/v1/pin/$id/?format=json" | jq -r .image.image`;
-                $image_uri =~ s/^([^\r\n]+)[\r\n]*$/$1/;
-                $image_uri =~ s/\+/ /g;
-                $image_uri =~ s/%([0-9a-fA-F]{2})/pack("H2",$1)/eg;
-
-                $r->internal_redirect($image_uri);
-                return OK;
-            }
-        ';
-    }
-
+    
     location / {
         include uwsgi_params;
         uwsgi_pass unix:/srv/www/pinry/uwsgi/socket;
