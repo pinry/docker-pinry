@@ -78,5 +78,4 @@ User.objects.create_superuser('$SUPER_USER_NAME', '$SUPER_USER_EMAIL', '$SUPER_U
 EOS
 fi
 
-/usr/bin/supervisord
-
+/usr/local/pyenv/shims/supervisord
