@@ -14,13 +14,14 @@ if [ -n "$IS_HTTPS" ]; then
     sed -i "s/http:/https:/" /srv/www/pinry/pinry/templates/includes/bookmarklet_link.html
 fi
 
-# Allow new registrations
+# Enable people from creating new accounts.
 if [ -n "$ALLOW_NEW_REGISTRATIONS" ]; then
-    sed -i "s/ALLOW_NEW_REGISTRATIONS = False/ALLOW_NEW_REGISTRATIONS = True/" /srv/www/pinry/pinry/settings.py
+    sed -i "s/ALLOW_NEW_REGISTRATIONS = False/ALLOW_NEW_REGISTRATIONS = True/" /srv/www/pinry/pinry/settings/__init__.py
 fi
 
+# Force users to login before seeing any pins.
 if [ -n "$PRIVATE" ]; then
-    sed -i "s/PUBLIC = True/PUBLIC = False/" /srv/www/pinry/pinry/settings.py
+    sed -i "s/PUBLIC = True/PUBLIC = False/" /srv/www/pinry/pinry/settings/__init__.py
 fi
 
 if [ -n "$STANDARD_SIZE" ]; then
