@@ -70,6 +70,15 @@ fi
 # Fix all settings after all commands are run
 chown -R www-data:www-data /data
 
+# Create superuser
+if [ "$SUPER_USER_NAME" ] && [ "$SUPER_USER_PASSWORD" ]
+then
+    cd /srv/www/pinry
+    cat << EOS | bin/python manage.py shell --settings=pinry.settings.production
+from django.contrib.auth.models import User
+User.objects.create_superuser('$SUPER_USER_NAME', '$SUPER_USER_EMAIL', '$SUPER_USER_PASSWORD')
+EOS
+fi
 
 supervisord
 
