@@ -25,7 +25,7 @@ if [ -n "$PRIVATE" ]; then
 fi
 
 if [ -n "$STANDARD_SIZE" ]; then
-    sed -i "s/'standard': {'size': \[600, 0\]},/'standard': {'size': [${STANDARD_SIZE}]},/" /srv/www/pinry/pinry/settings/production.py
+    sed -i "s/'standard': {'size': \[600, 0\]},/'standard': {'size': [${STANDARD_SIZE}]},/" /srv/www/pinry/pinry/settings/base.py
 fi
 
 if [ -n "$CLIENT_MAX_BODY_SIZE" ]; then
@@ -33,7 +33,7 @@ if [ -n "$CLIENT_MAX_BODY_SIZE" ]; then
 fi
 
 if [ -n "$DEBUG" ]; then
-    sed -i "s/DEBUG = False/DEBUG = True/" /srv/www/pinry/pinry/settings/production.py
+    sed -i "s/DEBUG = False/DEBUG = True/" /srv/www/pinry/pinry/settings/docker.py
 fi
 
 if [ -n "$NO_STATIC_CACHE" ]; then
@@ -50,8 +50,6 @@ then
 else
     PRODUCTION_SECRET_KEY=`cat /data/production_secret_key.txt`
 fi
-# Either way we need to try and set it because it may be a new docker container
-sed -i "s/CHANGE-ME/$PRODUCTION_SECRET_KEY/" /srv/www/pinry/pinry/settings/production.py
 
 # If static files don't exist collect them
 if [ -z "$NO_STATIC_CACHE" -a ! -d /data/static ]
