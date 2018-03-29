@@ -14,13 +14,14 @@ if [ -n "$IS_HTTPS" ]; then
     sed -i "s/http:/https:/" /srv/www/pinry/pinry/templates/includes/bookmarklet_link.html
 fi
 
-# Allow new registrations
+# Enable people from creating new accounts.
 if [ -n "$ALLOW_NEW_REGISTRATIONS" ]; then
-    sed -i "s/ALLOW_NEW_REGISTRATIONS = False/ALLOW_NEW_REGISTRATIONS = True/" /srv/www/pinry/pinry/settings.py
+    sed -i "s/ALLOW_NEW_REGISTRATIONS = False/ALLOW_NEW_REGISTRATIONS = True/" /srv/www/pinry/pinry/settings/__init__.py
 fi
 
+# Force users to login before seeing any pins.
 if [ -n "$PRIVATE" ]; then
-    sed -i "s/PUBLIC = True/PUBLIC = False/" /srv/www/pinry/pinry/settings.py
+    sed -i "s/PUBLIC = True/PUBLIC = False/" /srv/www/pinry/pinry/settings/__init__.py
 fi
 
 if [ -n "$STANDARD_SIZE" ]; then
@@ -37,8 +38,8 @@ if [ -n "$DEBUG" ]; then
 fi
 
 if [ -n "$NO_STATIC_CACHE" ]; then
-    sed -i "9s#alias /data/static;#alias /srv/www/pinry/pinry/static;#" /etc/nginx/sites-available/default
-    sed -i "10s/expires max;/expires off;/" /etc/nginx/sites-available/default
+    sed -i "38s#alias /data/static;#alias /srv/www/pinry/pinry/static;#" /etc/nginx/sites-available/default
+    sed -i "39s/expires max;/expires off;/" /etc/nginx/sites-available/default
 fi
 
 if [ -n "$PROCESSES" ]; then
@@ -74,6 +75,15 @@ fi
 # Fix all settings after all commands are run
 chown -R www-data:www-data /data
 
+# Create superuser
+if [ "$SUPER_USER_NAME" ] && [ "$SUPER_USER_PASSWORD" ]
+then
+    cd /srv/www/pinry
+    cat << EOS | bin/python manage.py shell --settings=pinry.settings.production
+from django.contrib.auth.models import User
+User.objects.create_superuser('$SUPER_USER_NAME', '$SUPER_USER_EMAIL', '$SUPER_USER_PASSWORD')
+EOS
+fi
 
 supervisord
 
