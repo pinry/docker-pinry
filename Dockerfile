@@ -37,7 +37,6 @@ RUN chown -R www-data:www-data /srv/www
 
 
 # Load in all of our config files.
-<<<<<<< HEAD
 ADD ./nginx/nginx.conf /etc/nginx/nginx.conf
 ADD ./nginx/sites-enabled/default /etc/nginx/sites-enabled/default
 ADD ./uwsgi/apps-enabled/pinry.ini /etc/uwsgi/apps-enabled/pinry.ini
