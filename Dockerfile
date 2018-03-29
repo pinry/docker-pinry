@@ -24,7 +24,9 @@ RUN apt-get update && \
 RUN pyenv install 2.7.14 && pyenv global 2.7.14
 RUN apt-get -y install nginx sqlite3 pwgen nodejs-legacy npm python-imaging libjpeg8-dev
 RUN apt-get -y install nginx-extras
-RUN npm install -g bower
+RUN npm config set strict-ssl false &&\
+    npm install -g bower &&\
+    npm config set strict-ssl true
 RUN mkdir -p /srv/www/; cd /srv/www/; git clone https://github.com/haoling/pinry.git
 RUN mkdir /srv/www/pinry/logs; mkdir /srv/www/pinry/uwsgi; mkdir /data
 RUN cd /srv/www/pinry; pip install -r requirements.txt; pip install uwsgi supervisor; chown -R www-data:www-data .
