@@ -32,13 +32,16 @@ RUN chown -R www-data:www-data /srv/www
 
 
 # Load in all of our config files.
+<<<<<<< HEAD
 ADD ./nginx/nginx.conf /etc/nginx/nginx.conf
 ADD ./nginx/sites-enabled/default /etc/nginx/sites-enabled/default
 ADD ./uwsgi/apps-enabled/pinry.ini /etc/uwsgi/apps-enabled/pinry.ini
 ADD ./supervisor/supervisord.conf /etc/supervisor/supervisord.conf
 ADD ./supervisor/conf.d/nginx.conf /etc/supervisor/conf.d/nginx.conf
 ADD ./supervisor/conf.d/uwsgi.conf /etc/supervisor/conf.d/uwsgi.conf
-
+ADD ./pinry/settings/__init__.py /srv/www/pinry/pinry/settings/__init__.py
+ADD ./pinry/settings/production.py /srv/www/pinry/pinry/settings/production.py
+ADD ./pinry/wsgi.py /srv/www/pinry/pinry/wsgi.py
 
 # Fix permissions
 ADD ./scripts/start /start
