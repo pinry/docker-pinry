@@ -55,14 +55,14 @@ fi
 if [ -z "$NO_STATIC_CACHE" -a ! -d /data/static ]
 then
     cd /srv/www/pinry
-    bin/python manage.py collectstatic --noinput --settings=pinry.settings.production
+    /usr/local/pyenv/shims/python manage.py collectstatic --noinput --settings=pinry.settings.production
 fi
 
 # If database doesn't exist yet create it
 if [ ! -f /data/production.db ]
 then
     cd /srv/www/pinry
-    bin/python manage.py migrate --noinput --settings=pinry.settings.production
+    /usr/local/pyenv/shims/python manage.py migrate --noinput --settings=pinry.settings.production
 fi
 
 # Fix all settings after all commands are run
@@ -72,7 +72,7 @@ chown -R www-data:www-data /data
 if [ "$SUPER_USER_NAME" ] && [ "$SUPER_USER_PASSWORD" ]
 then
     cd /srv/www/pinry
-    cat << EOS | bin/python manage.py shell --settings=pinry.settings.production
+    cat << EOS | /usr/local/pyenv/shims/python manage.py shell --settings=pinry.settings.production
 from django.contrib.auth.models import User
 User.objects.create_superuser('$SUPER_USER_NAME', '$SUPER_USER_EMAIL', '$SUPER_USER_PASSWORD')
 EOS
