@@ -25,7 +25,7 @@ if [ -n "$PRIVATE" ]; then
 fi
 
 if [ -n "$STANDARD_SIZE" ]; then
-    sed -i "s/'standard': {'size': \[600, 0\]},/'standard': {'size': [${STANDARD_SIZE}]},/" /srv/www/pinry/pinry/settings.py
+    sed -i "s/'standard': {'size': \[600, 0\]},/'standard': {'size': [${STANDARD_SIZE}]},/" /srv/www/pinry/pinry/settings/production.py
 fi
 
 if [ -n "$CLIENT_MAX_BODY_SIZE" ]; then
@@ -33,7 +33,7 @@ if [ -n "$CLIENT_MAX_BODY_SIZE" ]; then
 fi
 
 if [ -n "$DEBUG" ]; then
-    sed -i "s/DEBUG = False/DEBUG = True/" /srv/www/pinry/pinry/settings.py
+    sed -i "s/DEBUG = False/DEBUG = True/" /srv/www/pinry/pinry/settings/production.py
 fi
 
 if [ -n "$NO_STATIC_CACHE" ]; then
@@ -51,20 +51,20 @@ else
     PRODUCTION_SECRET_KEY=`cat /data/production_secret_key.txt`
 fi
 # Either way we need to try and set it because it may be a new docker container
-sed -i "s/CHANGE-ME/$PRODUCTION_SECRET_KEY/" /srv/www/pinry/pinry/settings.py
+sed -i "s/CHANGE-ME/$PRODUCTION_SECRET_KEY/" /srv/www/pinry/pinry/settings/production.py
 
 # If static files don't exist collect them
 if [ -z "$NO_STATIC_CACHE" -a ! -d /data/static ]
 then
     cd /srv/www/pinry
-    python manage.py collectstatic --noinput --settings=pinry.settings
+    bin/python manage.py collectstatic --noinput --settings=pinry.settings.production
 fi
 
 # If database doesn't exist yet create it
 if [ ! -f /data/production.db ]
 then
     cd /srv/www/pinry
-    python manage.py migrate --noinput --settings=pinry.settings
+    bin/python manage.py migrate --noinput --settings=pinry.settings.production
 fi
 
 # Fix all settings after all commands are run
@@ -80,5 +80,5 @@ User.objects.create_superuser('$SUPER_USER_NAME', '$SUPER_USER_EMAIL', '$SUPER_U
 EOS
 fi
 
-supervisord
+/usr/bin/supervisord
 
