@@ -32,7 +32,6 @@ RUN mkdir /srv/www/pinry/logs; mkdir /srv/www/pinry/uwsgi; mkdir /data
 RUN cd /srv/www/pinry; pip install -r requirements.txt; pip install uwsgi supervisor; chown -R www-data:www-data .
 
 # Fix permissions
-ADD ./pinry/settings.py /srv/www/pinry/pinry/settings.py
 RUN chown -R www-data:www-data /srv/www
 
 
