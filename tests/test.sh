@@ -17,15 +17,16 @@ docker run -d=true \
 
 sleep 10
 
+# Get status codes
+status_code_of_home=`$TRAVIS_BUILD_DIR/tests/http_status_code.sh $home_url`
+status_code_of_new_registration=`$TRAVIS_BUILD_DIR/tests/http_status_code.sh $new_registration_url`
+
+# Check status codes
 case $1 in
   private)
-    status_code_of_home=`$TRAVIS_BUILD_DIR/tests/http_status_code.sh $home_url`
-    status_code_of_new_registration=`$TRAVIS_BUILD_DIR/tests/http_status_code.sh $new_registration_url`
     [ "$status_code_of_home" = "302" ] && [ "$status_code_of_new_registration" = "302" ] && exit 0
     ;;
   allow_new_registrations)
-    status_code_of_home=`$TRAVIS_BUILD_DIR/tests/http_status_code.sh $home_url`
-    status_code_of_new_registration=`$TRAVIS_BUILD_DIR/tests/http_status_code.sh $new_registration_url`
     [ "$status_code_of_home" = "200" ] && [ "$status_code_of_new_registration" = "200" ] && exit 0
     ;;
   *)
