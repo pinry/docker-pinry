@@ -63,8 +63,10 @@ Notes on the run commands
 * ``pinry/pinry`` is simply what I called my docker build of this image
 * ``-d=true`` allows this to run cleanly as a daemon, remove for debugging
 * ``-p`` is the port it connects to, ``-p=host_port:docker_port``
+* ``-e IS_HTTPS=True`` SSL support, Defaults ``False``
 * ``-e ALLOW_NEW_REGISTRATIONS=true`` enables people from creating new accounts. Defaults ``false``
 * ``-e PRIVATE=true`` forces users to login before seeing any pins. Defaults ``false``
+* ``-e CLIENT_MAX_BODY_SIZE=1m`` set specific value in nginx.conf, Defaults ``1m``
 
 Using docker-pinry
 ------------------
