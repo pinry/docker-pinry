@@ -9,42 +9,6 @@
 # Updated: Aug 19th, 2014
 # -----------------------------------------------------------------------------
 
-# Fix https
-if [ -n "$IS_HTTPS" ]; then
-    sed -i "s/http:/https:/" /srv/www/pinry/pinry/templates/includes/bookmarklet_link.html
-fi
-
-# Enable people from creating new accounts.
-if [ -n "$ALLOW_NEW_REGISTRATIONS" ]; then
-    sed -i "s/ALLOW_NEW_REGISTRATIONS = False/ALLOW_NEW_REGISTRATIONS = True/" /srv/www/pinry/pinry/settings/__init__.py
-fi
-
-# Force users to login before seeing any pins.
-if [ -n "$PRIVATE" ]; then
-    sed -i "s/PUBLIC = True/PUBLIC = False/" /srv/www/pinry/pinry/settings/__init__.py
-fi
-
-if [ -n "$STANDARD_SIZE" ]; then
-    sed -i "s/'standard': {'size': \[600, 0\]},/'standard': {'size': [${STANDARD_SIZE}]},/" /srv/www/pinry/pinry/settings/base.py
-fi
-
-if [ -n "$CLIENT_MAX_BODY_SIZE" ]; then
-    sed -i "s/client_max_body_size 1m/client_max_body_size ${CLIENT_MAX_BODY_SIZE}/" /etc/nginx/nginx.conf
-fi
-
-if [ -n "$DEBUG" ]; then
-    sed -i "s/DEBUG = False/DEBUG = True/" /srv/www/pinry/pinry/settings/docker.py
-    echo 'touch-reload = %(base)/reload.trigger' >>/etc/uwsgi/apps-enabled/pinry.ini
-fi
-
-if [ -n "$NO_STATIC_CACHE" ]; then
-    sed -i "38s#alias /data/static;#alias /srv/www/pinry/pinry/static;#" /etc/nginx/sites-available/default
-    sed -i "39s/expires max;/expires off;/" /etc/nginx/sites-available/default
-fi
-
-if [ -n "$PROCESSES" ]; then
-    sed -i "s/processes = 1/processes = ${PROCESSES}/" /etc/uwsgi/apps-enabled/pinry.ini
-fi
 
 # Check for secret key if one doesn't exist create.
 if [ ! -f /data/production_secret_key.txt ]
@@ -57,30 +21,20 @@ else
 fi
 
 # If static files don't exist collect them
-if [ -z "$NO_STATIC_CACHE" -a ! -d /data/static ]
+if [ ! -d /data/static ]
 then
     cd /srv/www/pinry
-    /usr/local/pyenv/shims/python manage.py collectstatic --noinput --settings=pinry.settings.production
+    python manage.py collectstatic --noinput
 fi
 
 # If database doesn't exist yet create it
 if [ ! -f /data/production.db ]
 then
     cd /srv/www/pinry
-    /usr/local/pyenv/shims/python manage.py migrate --noinput --settings=pinry.settings.production
+    python manage.py migrate --noinput --settings=pinry.settings.production
 fi
 
 # Fix all settings after all commands are run
 chown -R www-data:www-data /data
 
-# Create superuser
-if [ "$SUPER_USER_NAME" ] && [ "$SUPER_USER_PASSWORD" ]
-then
-    cd /srv/www/pinry
-    cat << EOS | /usr/local/pyenv/shims/python manage.py shell --settings=pinry.settings.production
-from django.contrib.auth.models import User
-User.objects.create_superuser('$SUPER_USER_NAME', '$SUPER_USER_EMAIL', '$SUPER_USER_PASSWORD')
-EOS
-fi
-
-/usr/local/pyenv/shims/supervisord
+supervisord
