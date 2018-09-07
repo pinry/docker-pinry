@@ -12,17 +12,16 @@
 
 
 # Base system is the LTS version of Ubuntu.
-FROM python:3.6-strech
+FROM python:3.6-stretch
 
 RUN groupadd -g 2300 tmpgroup && usermod -g tmpgroup www-data && groupdel www-data && groupadd -g 1000 www-data && usermod -g www-data www-data && usermod -u 1000 www-data && groupdel tmpgroup
 
+RUN apt-get update
 RUN apt-get -y install nginx nginx-extras
-RUN npm config set strict-ssl false &&\
-    npm install -g bower &&\
-    npm config set strict-ssl true
+
 RUN mkdir -p /srv/www/; cd /srv/www/; git clone https://github.com/haoling/pinry.git
 RUN mkdir /srv/www/pinry/logs; mkdir /data
-RUN cd /srv/www/pinry; pip install -r requirements.txt
+RUN cd /srv/www/pinry && pip install pipenv && pipenv install --three --system
 RUN pip install gunicorn supervisor
 RUN chown -R www-data:www-data .
 
