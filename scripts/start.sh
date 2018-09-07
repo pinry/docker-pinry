@@ -37,4 +37,6 @@ fi
 # Fix all settings after all commands are run
 chown -R www-data:www-data /data
 
-supervisord
+# start all process
+/usr/sbin/nginx
+su - user -c "/scripts/_start_gunicorn.sh"

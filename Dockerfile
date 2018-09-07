@@ -36,11 +36,12 @@ ADD ./supervisor/supervisord.conf /etc/supervisor/supervisord.conf
 ADD ./supervisor/conf.d/nginx.conf /etc/supervisor/conf.d/nginx.conf
 
 # Fix permissions
-ADD ./scripts/start /start
+RUN mkdir /scripts/
+ADD ./scripts/* /scripts/start.sh
 RUN chown -R www-data:www-data /data; chmod +x /start
 RUN mkdir /var/log/supervisor /var/log/gunicorn
 
 # 80 is for nginx web, /data contains static files and database /start runs it.
 expose 80
 volume ["/data"]
-cmd    ["/start"]
+cmd    ["/scripts/start.sh"]
