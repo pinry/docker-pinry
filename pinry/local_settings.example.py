@@ -2,7 +2,7 @@ import os
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # Or just write your own secret-key here instead of using a env-variable
-SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = "secret_key_place_holder"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
