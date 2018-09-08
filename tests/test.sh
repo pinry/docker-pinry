@@ -8,13 +8,9 @@ admin_login_url="http://localhost:$HOST_PORT/admin/login/"
 
 echo "Starting container."
 
-docker run -d=true \
-  -p=$HOST_PORT:$GUEST_PORT \
-  -v=$MOUNT_DIR:/data \
-  -e ALLOW_NEW_REGISTRATIONS="$ALLOW_NEW_REGISTRATIONS" \
-  -e PRIVATE="$PRIVATE" \
-  "$IMAGE" \
-  /start
+$TRAVIS_BUILD_DIR/bootstrap.sh
+$TRAVIS_BUILD_DIR/start_docker.sh ${MOUNT_DIR}
+
 
 sleep 10
 
