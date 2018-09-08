@@ -28,7 +28,7 @@ DATABASES = {
 }
 
 # Allow users to register by themselves
-ALLOW_NEW_REGISTRATIONS = True
+ALLOW_NEW_REGISTRATIONS = False
 
 # Delete image files once you remove your pin
 IMAGE_AUTO_DELETE = True
