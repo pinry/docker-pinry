@@ -28,6 +28,9 @@ assert_equal () {
     [ ${1} = ${2} ] || exit_error "${1} != ${2}, exit now"
 }
 
+# enable command echo
+set -o xtrace
+
 # Check status codes
 case $1 in
   private)
