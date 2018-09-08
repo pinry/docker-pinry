@@ -33,3 +33,6 @@ IMAGE_SIZES = {
     'standard': {'size': [600, 0]},
     'square': {'crop': True, 'size': [125, 125]},
 }
+
+# Whether people can view pins without login
+PUBLIC = True
