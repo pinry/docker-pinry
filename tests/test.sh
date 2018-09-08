@@ -19,8 +19,13 @@ status_code_of_home=`$TRAVIS_BUILD_DIR/tests/http_status_code.sh $home_url`
 status_code_of_new_registration=`$TRAVIS_BUILD_DIR/tests/http_status_code.sh $new_registration_url`
 status_code_of_admin_login=`$TRAVIS_BUILD_DIR/tests/http_status_code.sh $admin_login_url`
 
+exit_error () {
+    echo ${1}
+    exit 1
+}
+
 assert_equal () {
-    [ ${1} = ${2} ] || echo "${0} != ${1}, exit now"; exit 1
+    [ ${1} = ${2} ] || exit_error "${1} != ${2}, exit now"
 }
 
 # Check status codes
