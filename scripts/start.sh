@@ -29,4 +29,6 @@ chown -R www-data:www-data /data
 
 # start all process
 /usr/sbin/nginx
+
+cd /srv/www/pinry/
 /scripts/_start_gunicorn.sh
