@@ -29,4 +29,4 @@ chown -R www-data:www-data /data
 
 # start all process
 /usr/sbin/nginx
-su - www-data -c "/scripts/_start_gunicorn.sh"
+/scripts/_start_gunicorn.sh
