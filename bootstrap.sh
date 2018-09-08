@@ -1,10 +1,11 @@
 #!/bin/bash
 
 # Force users to login before seeing any pins.
-if [ "$ALLOW_NEW_REGISTRATIONS" == "" ]; then
+if [ "${ALLOW_NEW_REGISTRATIONS}" = "" ]; then
     ALLOW_NEW_REGISTRATIONS=true
 fi
 
+echo ${ALLOW_NEW_REGISTRATIONS}
 
 sudo docker images |grep pinry || echo "No docker image found, building..." || ./build_docker.sh
 
@@ -32,12 +33,12 @@ then
 fi
 
 # Force users to login before seeing any pins.
-if [ -n "${PRIVATE}" ]; then
+if [ "${PRIVATE}" = "true" ]; then
     sed -i "s/PUBLIC = True/PUBLIC = False/" ./pinry/local_settings.py
 fi
 
 # Enable people from creating new accounts.
-if [ -n "$ALLOW_NEW_REGISTRATIONS" ]; then
+if [ "${ALLOW_NEW_REGISTRATIONS}" = "true" ]; then
     sed -i "s/ALLOW_NEW_REGISTRATIONS = False/ALLOW_NEW_REGISTRATIONS = True/" ./pinry/local_settings.py
 fi
 
