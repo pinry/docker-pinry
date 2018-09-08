@@ -5,9 +5,9 @@ if [ "${ALLOW_NEW_REGISTRATIONS}" = "" ]; then
     ALLOW_NEW_REGISTRATIONS=true
 fi
 
-echo ${ALLOW_NEW_REGISTRATIONS}
-
-sudo docker images |grep pinry || echo "No docker image found, building..." || ./build_docker.sh
+if [[ "$(docker images -q pinry/pinry 2> /dev/null)" == "" ]]; then
+  echo "No docker image found, building..." && ./build_docker.sh
+fi
 
 echo "=================================================================================="
 echo "Note: Please copy this key and keep it in a secure place."
