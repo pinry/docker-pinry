@@ -1,3 +1,3 @@
 #!/bin/bash
 
-sudo docker build -t pinry/pinry .
+sudo docker build -t pinry/pinry ${@} .
