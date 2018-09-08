@@ -24,6 +24,7 @@ echo ""
 echo ${SECRET_KEY}
 echo "=================================================================================="
 
+# Create local_settings.py
 if [ ! -f ./pinry/local_settings.py ];
 then
     cp ./pinry/local_settings.example.py ./pinry/local_settings.py
@@ -31,11 +32,17 @@ then
 fi
 
 # Force users to login before seeing any pins.
-if [ -n "$PRIVATE" ]; then
+if [ -n "${PRIVATE}" ]; then
     sed -i "s/PUBLIC = True/PUBLIC = False/" ./pinry/local_settings.py
 fi
 
 # Enable people from creating new accounts.
 if [ -n "$ALLOW_NEW_REGISTRATIONS" ]; then
     sed -i "s/ALLOW_NEW_REGISTRATIONS = False/ALLOW_NEW_REGISTRATIONS = True/" ./pinry/local_settings.py
+fi
+
+# Copy to docker-compose.yml
+if [ ! -f ./docker-compose.yml ];
+then
+    cp ./pinry/local_settings.example.py ./docker-compose.yml
 fi
