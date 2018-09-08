@@ -21,7 +21,7 @@ RUN apt-get -y install nginx nginx-extras pwgen
 
 RUN mkdir -p /srv/www/; cd /srv/www/; git clone https://github.com/pinry/pinry.git
 RUN mkdir /srv/www/pinry/logs; mkdir /data
-RUN cd /srv/www/pinry && pip install pipenv && pipenv install --three --system
+RUN cd /srv/www/pinry && pip install pipenv && pipenv install --three --system -e .
 RUN pip install gunicorn
 
 # Fix permissions
