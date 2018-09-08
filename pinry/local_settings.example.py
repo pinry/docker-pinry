@@ -1,5 +1,11 @@
 import os
 
+
+# Please don't change following settings unless you know what you are doing
+STATIC_ROOT = '/data/static'
+
+MEDIA_ROOT = os.path.join(STATIC_ROOT, 'media')
+
 # SECURITY WARNING: keep the secret key used in production secret!
 # Or just write your own secret-key here instead of using a env-variable
 SECRET_KEY = "secret_key_place_holder"
