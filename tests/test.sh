@@ -19,13 +19,23 @@ status_code_of_home=`$TRAVIS_BUILD_DIR/tests/http_status_code.sh $home_url`
 status_code_of_new_registration=`$TRAVIS_BUILD_DIR/tests/http_status_code.sh $new_registration_url`
 status_code_of_admin_login=`$TRAVIS_BUILD_DIR/tests/http_status_code.sh $admin_login_url`
 
+assert_equal () {
+    [ ${1} = ${2} ] || echo "${0} != ${1}, exit now"; exit 1
+}
+
 # Check status codes
 case $1 in
   private)
-    [ "$status_code_of_home" = "302" ] && [ "$status_code_of_new_registration" = "302" ] && [ "$status_code_of_admin_login" = "302" ] && exit 0
+    assert_equal "$status_code_of_home" "302"
+    assert_equal "$status_code_of_new_registration" "302"
+    assert_equal "$status_code_of_admin_login" "302"
+    exit 0
     ;;
   allow_new_registrations)
-    [ "$status_code_of_home" = "200" ] && [ "$status_code_of_new_registration" = "200" ] && [ "$status_code_of_admin_login" = "200" ] && exit 0
+    assert_equal "$status_code_of_home" "200"
+    assert_equal "$status_code_of_new_registration" "200"
+    assert_equal "$status_code_of_admin_login" "200"
+    exit 0
     ;;
   *)
     echo "$0 $1: invalid option."
