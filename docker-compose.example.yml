@@ -4,7 +4,7 @@ services:
   web:
     build: .
     command: >
-      bash -c "/scripts/_start_docker.sh"
+      bash -c "/scripts/start.sh"
     ports:
 # if you use "127.0.0.1", no one except you can visit it from within
 #      - "127.0.0.1:10000:8000"

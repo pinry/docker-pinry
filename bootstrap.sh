@@ -45,5 +45,5 @@ fi
 # Copy to docker-compose.yml
 if [ ! -f ./docker-compose.yml ];
 then
-    cp ./pinry/local_settings.example.py ./docker-compose.yml
+    cp ./docker-compose.example.yml ./docker-compose.yml
 fi
