@@ -4,7 +4,7 @@ server {
     
     access_log /srv/www/pinry/logs/access.log;
     error_log /srv/www/pinry/logs/error.log;
-    
+
     location /media {
         alias /data/media;
         expires max;
@@ -18,7 +18,6 @@ server {
     }
     
     location / {
-        include uwsgi_params;
-        uwsgi_pass unix:/srv/www/pinry/uwsgi/socket;
+        proxy_pass http://localhost:8000;
     }
 }
