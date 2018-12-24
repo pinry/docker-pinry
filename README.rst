@@ -19,6 +19,15 @@ docker-pinry and pinry itself::
   cd docker-pinry
   ./bootstrap.sh
 
+Now you can start your container by command like this::
+
+  # this is where your database and pins localted
+  mkdir data
+  # use absolute path for docker to avoid using default data-volume (we use directory instead)
+  ./start_docker.sh `readlink -f data`
+
+Please visit `http://your-ip:10000` to visit your instance and register a new account, enjoy it.
+
   
 Configuring docker-pinry
 ------------------------
