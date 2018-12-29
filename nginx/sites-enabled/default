@@ -6,7 +6,7 @@ server {
     error_log /srv/www/pinry/logs/error.log;
 
     location /media {
-        alias /data/media;
+        alias /data/static/media;
         expires max;
         access_log off;
     }
