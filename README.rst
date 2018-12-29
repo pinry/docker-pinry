@@ -26,17 +26,17 @@ Now you can start your container by command like this::
   # use absolute path for docker to avoid using default data-volume (we use directory instead)
   ./start_docker.sh `readlink -f data`
 
-Please visit `http://your-ip:10000` to visit your instance and register a new account, enjoy it.
+Please visit `http://your-ip` to visit your instance and register a new account, enjoy it.
 
-  
+
 Configuring docker-pinry
 ------------------------
 Enable signups for new users by editing ``pinry/local_settings.py``::
 
   ALLOW_NEW_REGISTRATIONS = True
-  
+
 `Additional pinry configuration settings`_
-  
+
 Building docker-pinry again
 ---------------------------
 
